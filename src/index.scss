@@ -1,7 +1,9 @@
-@import "~bulma/sass/utilities/_all.sass";
-@import "~bulma/sass/base/_all.sass";
-@import "~bulma/sass/elements/button.sass";
-@import "~bulma/sass/layout/section.sass";
+@import './styles/_variables';
+@import './styles/_spacing';
+
+@import "~bulma/bulma.sass";
+
+@import './App.scss';
 
 body {
   margin: 0;
@@ -9,3 +11,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+html {
+  background-color: $primary;
+}
+
+
