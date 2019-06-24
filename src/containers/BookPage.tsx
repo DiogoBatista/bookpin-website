@@ -6,7 +6,7 @@ import axios from 'axios';
 import { PageView, initGA } from '../helpers/tracking';
 import { GOOGLE_CLOUD_URL } from '../helpers/constants';
 import useReactRouter from 'use-react-router';
-import { match } from 'react-router';
+import { SearchError } from '../components/Errors/SearchError';
 
 const initialState = {
   id: "",
@@ -45,13 +45,17 @@ export const BookPage = () => {
       .then((response) => {
 
         setBook(response.data);
+
         setTimeout(() => {
           setIsLoading(false);
         }, 500)
       })
-      .catch(function (error) {
-        console.log(error);
-        // TODO: handle errors in layout
+      .catch((error) => {
+        setIsLoading(false);
+        setError({
+          hasError: true,
+          errorMessage: error.response.data.message
+        })
       });
   }
 
@@ -84,7 +88,7 @@ export const BookPage = () => {
 
       {
         hasError && !isLoading ? (
-          <div>ERROR</div>
+          <SearchError message={errorMessage} />
         ) : ''
       }
 
