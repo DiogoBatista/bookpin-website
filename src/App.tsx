@@ -3,6 +3,7 @@ import logo from './assets/logo_small.svg';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { BookPage } from './containers/BookPage';
 import { Homepage } from './containers/Homepage';
+import { BookSearch } from './containers/BookSearch';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         </nav>
 
         <Route path="/" exact component={Homepage} />
+        <Route path="/book" component={BookSearch} exact />
         <Route path="/book/:id" component={BookPage} />
       </div>
     </Router>

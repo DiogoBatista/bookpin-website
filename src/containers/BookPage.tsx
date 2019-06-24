@@ -4,6 +4,9 @@ import { BookInfoList } from "./BookInfoList";
 import { Book } from '../models/book.model';
 import axios from 'axios';
 import { PageView, initGA } from '../helpers/tracking';
+import { GOOGLE_CLOUD_URL } from '../helpers/constants';
+import useReactRouter from 'use-react-router';
+import { match } from 'react-router';
 
 const initialState = {
   id: "",
@@ -17,19 +20,20 @@ const initialState = {
   authors: []
 }
 
+const errorInitialState = {
+  hasError: false,
+  errorMessage: ''
+}
+
 export const BookPage = () => {
   const [book, setBook] = useState<Book>(initialState);
+  const [{ hasError, errorMessage }, setError] = useState(errorInitialState);
   const [isLoading, setIsLoading] = useState(true);
+  const { match } = useReactRouter();
 
-  useEffect(() => {
-    initGA();
-    PageView();
 
-    var url = "https://us-central1-bookpin.cloudfunctions.net/getBook"
-    const book = 'meditations'
-
+  const fetchBookInfo = (book: { book: string }) => {
     var options = {
-      url,
       data: JSON.stringify(book),
       headers: {
         'Content-Type': 'application/json'
@@ -37,7 +41,7 @@ export const BookPage = () => {
       json: true
     };
 
-    axios.post(url, { book }, options)
+    axios.post(GOOGLE_CLOUD_URL, { book }, options)
       .then((response) => {
 
         setBook(response.data);
@@ -49,26 +53,56 @@ export const BookPage = () => {
         console.log(error);
         // TODO: handle errors in layout
       });
+  }
+
+  useEffect(() => {
+    initGA();
+    PageView();
+
+    const bookParam: any = match.params;
+    const book = bookParam.id;
+
+    if (book) {
+      fetchBookInfo(book);
+    } else {
+      setError({
+        hasError: true,
+        errorMessage: 'No book provided, please try again'
+      })
+    }
+
+
   }, []);
 
   return (
     <>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-          <section className="section">
-            <div className="container">
-              <div className="columns is-5">
-                <div className="column is-three-fifths">
-                  <BookDetails {...book} />
-                </div>
-                <div className="column">
-                  <BookInfoList {...book} />
-                </div>
+      {
+        isLoading ? (
+          <div>Loading...</div>
+        ) : ''
+      }
+
+      {
+        hasError && !isLoading ? (
+          <div>ERROR</div>
+        ) : ''
+      }
+
+
+      {(!isLoading && !hasError) ? (
+        <section className="section">
+          <div className="container">
+            <div className="columns is-5">
+              <div className="column is-three-fifths">
+                <BookDetails {...book} />
+              </div>
+              <div className="column">
+                <BookInfoList {...book} />
               </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+      ) : ''}
     </>
 
   )
