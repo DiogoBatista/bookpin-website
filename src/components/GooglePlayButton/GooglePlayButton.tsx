@@ -6,7 +6,7 @@ interface GooglePlayButtonProps {
   bookName?: string;
   bookId?: string;
 }
-const AFFILIATE_ID = "1011l69236";
+const AFFILIATE_ID = "1101l59065";
 
 export const GooglePlayButton = ({ bookName, bookId }: GooglePlayButtonProps) => {
   return (
