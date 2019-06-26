@@ -102,7 +102,6 @@ export const BookPage = () => {
         ) : ''
       }
 
-
       {(!isLoading && !hasError) ? (
         <section className="section">
           <div className="container">
@@ -118,6 +117,5 @@ export const BookPage = () => {
         </section>
       ) : ''}
     </>
-
   )
 }
