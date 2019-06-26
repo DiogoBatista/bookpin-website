@@ -2,8 +2,7 @@ import React from 'react';
 import logo from './assets/logo_small.svg';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import { BookPage } from './containers/BookPage';
-import { Homepage } from './containers/Homepage';
-import { BookSearch } from './containers/BookSearch';
+import { NotFoundPage } from './containers/NotFoundPage';
 
 const App = () => {
   return (
@@ -19,9 +18,8 @@ const App = () => {
           </section>
         </nav>
         <Switch>
-          <Route path="/" exact component={Homepage} />
-          <Route path="/search" component={BookSearch} />
           <Route path="/book/:id" component={BookPage} />
+          <Route path="/404" component={NotFoundPage} />
           <Redirect to="/404" />
         </Switch>
       </div>
