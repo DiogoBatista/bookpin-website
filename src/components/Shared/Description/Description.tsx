@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './_description.scss';
 
 interface DescriptionProps {
-  description: string;
+  description?: string;
   classNames?: string;
 }
 

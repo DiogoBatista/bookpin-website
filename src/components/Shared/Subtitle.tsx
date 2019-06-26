@@ -1,7 +1,7 @@
 import React from "react";
 
 interface SubtitleProps {
-  text: string;
+  text?: string;
 }
 
 export const SubTitle = ({ text }: SubtitleProps) => (
