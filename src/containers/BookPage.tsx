@@ -76,7 +76,7 @@ export const BookPage = () => {
     }
 
 
-  }, []);
+  }, [match.params]);
 
   return (
     <>

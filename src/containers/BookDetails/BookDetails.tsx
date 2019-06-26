@@ -4,7 +4,6 @@ import { SubTitle } from '../../components/Shared/Subtitle';
 import { Authors } from '../../components/Shared/Authors/Authors';
 import { Description } from '../../components/Shared/Description/Description';
 import { GooglePlayButton } from '../../components/GooglePlayButton/GooglePlayButton';
-import { Book } from '../../models/book.model';
 import './_book-details.scss';
 
 export const BookDetails = ({ thumbnail, title, subTitle, authors, description, id }: any) => {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { PageView, initGA, Event } from '../helpers/tracking';
+import { PageView, initGA } from '../helpers/tracking';
 
 export const BookSearch = () => {
   useEffect(() => {

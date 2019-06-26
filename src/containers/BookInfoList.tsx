@@ -1,5 +1,4 @@
 import React from 'react';
-import { Book } from '../models/book.model';
 import { Categories } from '../components/RightSideInfo/Categories';
 import { PublishedDate } from '../components/RightSideInfo/PublishedDate';
 
