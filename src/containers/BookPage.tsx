@@ -7,6 +7,8 @@ import { PageView, initGA } from '../helpers/tracking';
 import { GOOGLE_CLOUD_URL } from '../helpers/constants';
 import useReactRouter from 'use-react-router';
 import { SearchError } from '../components/Errors/SearchError';
+import loader from '../assets/loader.svg';
+import { Loading } from '../components/Shared/Loading/Loading';
 
 const initialState = {
   id: "",
@@ -48,7 +50,7 @@ export const BookPage = () => {
 
         setTimeout(() => {
           setIsLoading(false);
-        }, 500)
+        }, 1000)
       })
       .catch((error) => {
         setIsLoading(false);
@@ -82,7 +84,11 @@ export const BookPage = () => {
     <>
       {
         isLoading ? (
-          <div>Loading...</div>
+          <section className="section">
+            <div className="container has-text-centered">
+              <Loading />
+            </div>
+          </section>
         ) : ''
       }
 
