@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './assets/logo_small.svg';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import { BookPage } from './containers/BookPage';
 import { Homepage } from './containers/Homepage';
 import { BookSearch } from './containers/BookSearch';
@@ -13,15 +13,17 @@ const App = () => {
           <section className="section">
             <div className="container">
               <div className="has-text-centered">
-                <img src={logo} />
+                <img src={logo} alt="Bookpin Logo" />
               </div>
             </div>
           </section>
         </nav>
-
-        <Route path="/" exact component={Homepage} />
-        <Route path="/book" component={BookSearch} exact />
-        <Route path="/book/:id" component={BookPage} />
+        <Switch>
+          <Route path="/" exact component={Homepage} />
+          <Route path="/search" component={BookSearch} />
+          <Route path="/book/:id" component={BookPage} />
+          <Redirect to="/404" />
+        </Switch>
       </div>
     </Router>
   );
