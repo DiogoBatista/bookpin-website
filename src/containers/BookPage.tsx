@@ -94,7 +94,11 @@ export const BookPage = () => {
 
       {
         hasError && !isLoading ? (
-          <SearchError message={errorMessage} />
+          <section className="section">
+            <div className="container has-text-centered">
+              <SearchError message={errorMessage} />
+            </div>
+          </section>
         ) : ''
       }
 
