@@ -1,8 +1,8 @@
 import React from 'react';
-import logo from './assets/logo_small.svg';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import { BookPage } from './containers/BookPage';
 import { NotFoundPage } from './containers/NotFoundPage';
+import { Logo } from './components/Shared/Logo';
 
 const App = () => {
   return (
@@ -12,7 +12,7 @@ const App = () => {
           <section className="section">
             <div className="container">
               <div className="has-text-centered">
-                <img src={logo} alt="Bookpin Logo" />
+                <Logo />
               </div>
             </div>
           </section>
