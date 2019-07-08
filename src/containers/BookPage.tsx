@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { BookDetails } from "./BookDetails/BookDetails";
-import { BookInfoList } from "./BookInfoList";
-import { Book } from '../models/book.model';
 import axios from 'axios';
-import { PageView, initGA } from '../helpers/tracking';
-import { GOOGLE_CLOUD_URL } from '../helpers/constants';
 import useReactRouter from 'use-react-router';
+import { BookDetailsWrapper } from "./BookDetails/BookDetailsWrapper";
+import { BookInfoList } from "./BookInfoList";
+import { Book, BookDepository } from '../models/book.model';
+import { PageView, initGA } from '../helpers/tracking';
+import { GOOGLE_CLOUD_URL_GOOGLE, GOOGLE_CLOUD_URL_BOOK_DEPOSITORY } from '../helpers/constants';
 import { SearchError } from '../components/Errors/SearchError';
-import loader from '../assets/loader.svg';
 import { Loading } from '../components/Shared/Loading/Loading';
+import { Description } from '../components/Shared/Description/Description';
+import { BuyItNow } from '../components/BuyItNow/BuyItNow';
+import { Header } from '../components/Shared/Header';
+
+import { BookImage } from './BookDetails/BookImage';
 
 const initialState = {
   id: "",
@@ -29,6 +33,7 @@ const errorInitialState = {
 
 export const BookPage = () => {
   const [book, setBook] = useState<Book>(initialState);
+  const [bookDepository, setBookDepository] = useState<BookDepository>(initialState);
   const [{ hasError, errorMessage }, setError] = useState(errorInitialState);
   const [isLoading, setIsLoading] = useState(true);
   const { match } = useReactRouter();
@@ -43,11 +48,12 @@ export const BookPage = () => {
       json: true
     };
 
-    axios.post(GOOGLE_CLOUD_URL, { book }, options)
+    axios.post(GOOGLE_CLOUD_URL_GOOGLE, { book }, options)
       .then((response) => {
+        console.log(response.data)
 
         setBook(response.data);
-
+        fetchBookDepositoryInfo(response.data.title)
         setTimeout(() => {
           setIsLoading(false);
         }, 1000)
@@ -58,6 +64,25 @@ export const BookPage = () => {
           hasError: true,
           errorMessage: error.response.data.message
         })
+      });
+  }
+
+  const fetchBookDepositoryInfo = (name: string) => {
+
+    var options = {
+      data: JSON.stringify(name),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      json: true
+    };
+
+    axios.post(GOOGLE_CLOUD_URL_BOOK_DEPOSITORY, { book: name }, options)
+      .then((response) => {
+        setBookDepository(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
       });
   }
 
@@ -107,7 +132,18 @@ export const BookPage = () => {
           <div className="container">
             <div className="columns is-5">
               <div className="column is-three-fifths">
-                <BookDetails {...book} />
+                <BookDetailsWrapper>
+                  <BookImage {...book} />
+                  <div className="m-t-lg">
+                    <Description description={book.description} />
+                  </div>
+                  <div className="m-t-md m-b-md">
+                    <Header text={"Buy it now"} />
+                  </div>
+                  <div className="m-t-lg m-b-lg">
+                    <BuyItNow book={book} bookDepository={bookDepository} />
+                  </div>
+                </BookDetailsWrapper>
               </div>
               <div className="column">
                 <BookInfoList {...book} />
