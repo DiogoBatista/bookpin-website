@@ -50,8 +50,6 @@ export const BookPage = () => {
 
     axios.post(GOOGLE_CLOUD_URL_GOOGLE, { book }, options)
       .then((response) => {
-        console.log(response.data)
-
         setBook(response.data);
         fetchBookDepositoryInfo(response.data.title)
         setTimeout(() => {
