@@ -18,7 +18,8 @@ const App = () => {
           </section>
         </nav>
         <Switch>
-          <Route path="/book/:id" component={BookPage} />
+          <Route path="/book/:title" component={BookPage} />
+          <Route path="/book/:title/:authors" component={BookPage} />
           <Route path="/404" component={NotFoundPage} />
           <Redirect to="/404" />
         </Switch>

@@ -30,6 +30,11 @@ const errorInitialState = {
   hasError: false,
   errorMessage: ''
 }
+interface BookParams {
+  title: string;
+  authors: [];
+
+}
 
 export const BookPage = () => {
   const [book, setBook] = useState<Book>(initialState);
@@ -39,7 +44,7 @@ export const BookPage = () => {
   const { match } = useReactRouter();
 
 
-  const fetchBookInfo = (book: { book: string }) => {
+  const fetchBookInfo = (book: BookParams) => {
     var options = {
       data: JSON.stringify(book),
       headers: {
@@ -89,7 +94,14 @@ export const BookPage = () => {
     PageView();
 
     const bookParam: any = match.params;
-    const book = bookParam.id;
+
+    const bookTitle = bookParam.title;
+    const bookAuthors = bookParam.authors;
+
+    const book = {
+      title: bookTitle,
+      authors: bookAuthors
+    };
 
     if (book) {
       fetchBookInfo(book);
